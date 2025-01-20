@@ -5,6 +5,8 @@ import UserCard from './UserCard';
 import { useEffect, useState } from 'react';
 import { BASE_URL } from '../App';
 
+// Component User Grid
+
 const UserGrid = ({ users, setUsers }) => {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -18,6 +20,7 @@ const UserGrid = ({ users, setUsers }) => {
         if (!res.ok) {
           throw new Error(data.error);
         }
+        // Jika Berhasil
         setUsers(data);
       } catch (error) {
         console.error(error);
@@ -39,16 +42,19 @@ const UserGrid = ({ users, setUsers }) => {
         }}
         gap={4}
       >
+        {/* Render UserCard untuk setiap data kontak yang ada */}
         {users.map((user) => (
           <UserCard key={user.id} user={user} setUsers={setUsers} />
         ))}
       </Grid>
 
+      {/* Jika masi fetching */}
       {isLoading && (
         <Flex justifyContent={'center'}>
           <Spinner size={'xl'} />
         </Flex>
       )}
+      {/* Jika sudah selesai fethcing, dan tidak ada data kontak */}
       {!isLoading && users.length === 0 && (
         <Flex justifyContent={'center'}>
           <Text fontSize={'xl'}>

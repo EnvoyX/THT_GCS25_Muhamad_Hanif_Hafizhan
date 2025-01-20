@@ -22,9 +22,12 @@ import { useState } from 'react';
 import { BiAddToQueue } from 'react-icons/bi';
 import { BASE_URL } from '../App';
 
+// Component Create User Modal
+
 const CreateUserModal = ({ setUsers }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setIsLoading] = useState(false);
+  // Input untuk request API
   const [inputs, setInputs] = useState({
     name: '',
     role: '',
@@ -33,8 +36,10 @@ const CreateUserModal = ({ setUsers }) => {
   });
   const toast = useToast();
 
+  // Function untuk menghandle untuk menambah kontak baru
+  // Dengan melakukan fetch request dengan method POST
   const handleCreateUser = async (e) => {
-    e.preventDefault(); // prevent page refresh
+    e.preventDefault(); // menghindari refresh page
     setIsLoading(true);
     try {
       const res = await fetch(BASE_URL + '/friends', {
@@ -45,6 +50,7 @@ const CreateUserModal = ({ setUsers }) => {
         body: JSON.stringify(inputs),
       });
 
+      // Data kontak baru
       const data = await res.json();
       if (!res.ok) {
         throw new Error(data.error);
@@ -52,20 +58,22 @@ const CreateUserModal = ({ setUsers }) => {
 
       toast({
         status: 'success',
-        title: 'Yayy! 🎉',
-        description: 'Friend created successfully.',
+        title: 'Success!',
+        description: 'Contact created successfully.',
         duration: 2000,
         position: 'top-center',
       });
       onClose();
+      // Semua list kontak yang sudah ada, akan ditambah dengan kontak baru (data)
       setUsers((prevUsers) => [...prevUsers, data]);
 
+      // Clear inputs
       setInputs({
         name: '',
         role: '',
         description: '',
         gender: '',
-      }); // clear inputs
+      });
     } catch (error) {
       toast({
         status: 'error',
@@ -88,12 +96,13 @@ const CreateUserModal = ({ setUsers }) => {
         <ModalOverlay />
         <form onSubmit={handleCreateUser}>
           <ModalContent>
-            <ModalHeader> My new BFF 😍 </ModalHeader>
+            <ModalHeader> New Contact </ModalHeader>
             <ModalCloseButton />
 
             <ModalBody pb={6}>
               <Flex alignItems={'center'} gap={4}>
                 {/* Left */}
+                {/* Input Nama */}
                 <FormControl>
                   <FormLabel>Full Name</FormLabel>
                   <Input
@@ -105,6 +114,7 @@ const CreateUserModal = ({ setUsers }) => {
                   />
                 </FormControl>
 
+                {/* input Role */}
                 {/* Right */}
                 <FormControl>
                   <FormLabel>Role</FormLabel>
@@ -118,6 +128,7 @@ const CreateUserModal = ({ setUsers }) => {
                 </FormControl>
               </Flex>
 
+              {/* Input Description */}
               <FormControl mt={4}>
                 <FormLabel>Description</FormLabel>
                 <Textarea
@@ -131,6 +142,7 @@ const CreateUserModal = ({ setUsers }) => {
                 />
               </FormControl>
 
+              {/* Input Gender */}
               <RadioGroup mt={4}>
                 <Flex gap={5}>
                   <Radio

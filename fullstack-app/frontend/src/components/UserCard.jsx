@@ -15,8 +15,12 @@ import { BiTrash } from 'react-icons/bi';
 import EditModal from './EditModal';
 import { BASE_URL } from '../App';
 
+// Component User Card
+
 const UserCard = ({ user, setUsers }) => {
   const toast = useToast();
+  // Handle ketika user mau delete atau menghapus kontak,
+  // Dengan melakukan fetch request dengan method DELETE
   const handleDeleteUser = async () => {
     try {
       const res = await fetch(BASE_URL + '/friends/' + user.id, {
@@ -26,11 +30,12 @@ const UserCard = ({ user, setUsers }) => {
       if (!res.ok) {
         throw new Error(data.error);
       }
+      // Memunculkan kontak-kontak dengan filter id yang tidak sama dengan kontak id yang ingin dihapus
       setUsers((prevUsers) => prevUsers.filter((u) => u.id !== user.id));
       toast({
         status: 'success',
-        title: 'Success',
-        description: 'Friend deleted successfully.',
+        title: 'Success!',
+        description: 'Contact deleted successfully.',
         duration: 2000,
         position: 'top-center',
       });

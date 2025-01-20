@@ -12,6 +12,8 @@ import { IoMoon } from 'react-icons/io5';
 import { LuSun } from 'react-icons/lu';
 import CreateUserModal from './CreateUserModal';
 
+// Component Navbar
+
 const Navbar = ({ setUsers }) => {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
@@ -32,9 +34,13 @@ const Navbar = ({ setUsers }) => {
           >
             <img src="/react.png" alt="React logo" width={50} height={50} />
             <Text fontSize={'40px'}>+</Text>
-            <img src="/python.png" alt="Python logo" width={50} height={40} />
-            <Text fontSize={'40px'}>=</Text>
-
+            <img
+              src="/flask-icon.png"
+              alt="Flask logo"
+              width={50}
+              height={40}
+            />
+            =<Text fontSize={'40px'}></Text>
             <img src="/explode.png" alt="Explode head" width={45} height={45} />
           </Flex>
           {/* Sisi Kanan */}
@@ -44,7 +50,7 @@ const Navbar = ({ setUsers }) => {
               fontWeight={500}
               display={{ base: 'none', md: 'block' }}
             >
-              BFFship 🔥
+              CONTACT APP📱
             </Text>
 
             <Button onClick={toggleColorMode}>

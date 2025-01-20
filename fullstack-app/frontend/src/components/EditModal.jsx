@@ -21,6 +21,8 @@ import { useState } from 'react';
 import { BiEditAlt } from 'react-icons/bi';
 import { BASE_URL } from '../App';
 
+// Component Edit Modal
+
 function EditModal({ setUsers, user }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setIsLoading] = useState(false);
@@ -31,8 +33,10 @@ function EditModal({ setUsers, user }) {
   });
   const toast = useToast();
 
+  // Fungsi yang menghandle jika user mengedit kontak
+  // dengan memanggil atau fetch API dari backend, method PATCH
   const handleEditUser = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // menghindari refresh page
     setIsLoading(true);
     try {
       const res = await fetch(BASE_URL + '/friends/' + user.id, {
@@ -46,12 +50,14 @@ function EditModal({ setUsers, user }) {
       if (!res.ok) {
         throw new Error(data.error);
       }
+
+      // Update list kontak berdasarkan data yang telah diupdate
       setUsers((prevUsers) =>
         prevUsers.map((u) => (u.id === user.id ? data : u))
       );
       toast({
         status: 'success',
-        title: 'Yayy! 🎉',
+        title: 'Success!',
         description: 'Friend updated successfully.',
         duration: 2000,
         position: 'top-center',
@@ -85,7 +91,7 @@ function EditModal({ setUsers, user }) {
         <ModalOverlay />
         <form onSubmit={handleEditUser}>
           <ModalContent>
-            <ModalHeader>My new BFF 😍</ModalHeader>
+            <ModalHeader>Edit Contact</ModalHeader>
             <ModalCloseButton />
             <ModalBody pb={6}>
               <Flex alignItems={'center'} gap={4}>

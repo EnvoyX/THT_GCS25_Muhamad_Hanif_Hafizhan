@@ -22,7 +22,8 @@ def create_friend():
         #Validation
         required_fields = ["name", "role", "description", "gender"]
         for field in required_fields:
-            if field not in data:
+            # Cek jika ada field yang tidak ada di data atau jika semua data nya kosong
+            if field not in data or not data.get(field):
                 return jsonify({"error": f'Missing required field: {field}'}), 400 
 
         name = data.get("name")
@@ -43,7 +44,7 @@ def create_friend():
         db.session.add(new_friend)
         db.session.commit()
 
-        return jsonify({"msg": "Friend added successfully"}) , 201
+        return jsonify(new_friend.to_json()) , 201
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
@@ -78,7 +79,7 @@ def update_friend(id):
         friend.description = data.get("description", friend.description)
         friend.gender = data.get("gender", friend.gender)
 
-        # friend.img_url = data.get("gender", friend.img_url)
+        # Check perubahan gender dan nama user, untuk mengubah username di link img_url
         if friend.gender == "male":
             friend.img_url = f'https://avatar.iran.liara.run/public/boy?username={friend.name}'
         elif friend.gender == "female":
