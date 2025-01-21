@@ -9,7 +9,7 @@ git clone https://github.com/EnvoyX/THT_GCS25_Muhamad_Hanif_Hafizhan
 2. Navigate to the project directory:
 
 ```bash
-cd THT_GCS25_Muhamad_Hanif_Hafizhan/fullstack-app
+cd fullstack-app
 ```
 
 3. Navigate to the backend directory:
